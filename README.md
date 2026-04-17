@@ -1,18 +1,53 @@
-# React + Vite
+# AdminX
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite admin dashboard template with Ant Design, featuring sidebar navigation, client-side routing, and global state management.
 
-Currently, two official plugins are available:
+### Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Tech | Version | Description |
+|------|---------|-------------|
+| React | 19 | Core framework with React Compiler enabled |
+| Vite | 8 | Build tool with HMR |
+| Ant Design | 6 | UI component library |
+| React Router | 7 | Client-side routing |
+| Redux Toolkit | 2 | Global state management |
+| Axios | 1 | HTTP client |
 
-## React Compiler
+### Project Structure
+```
+src/
+├── components/        # Shared components
+│   ├── Aside.jsx      # Sidebar with collapse toggle
+│   └── MainHeader.jsx # Top navigation bar
+├── config/            # Menu configuration
+├── pages/             # Page components
+│   ├── home/          # Home page
+│   ├── products/      # Products page
+│   ├── user/          # User page
+│   └── other/         # Other pages
+├── router/            # Route config (lazy loading)
+├── store/             # Redux store
+│   └── reducer/tab.js # Sidebar collapse state
+└── App.jsx            # Root layout
+```
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### Getting Started
+```bash
+# Install dependencies
+npm install
 
-Note: This will impact Vite dev & build performances.
+# Start dev server
+npm run dev
 
-## Expanding the ESLint configuration
+# Build for production
+npm run build
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Preview production build
+npm run preview
+```
+
+### Features
+- **Sidebar**: Collapsible with dynamically loaded Ant Design icons; menu items are centrally configured in `src/config/index.js`
+- **Routing**: Lazy-loaded routes via `React.lazy` and `createBrowserRouter`, keeping the initial bundle small
+- **State Management**: Sidebar collapse state (`isCollapse`) is managed globally with Redux Toolkit
+- **Layout**: Full-viewport Ant Design `Layout` composed of a Sider, Header, and Content area
