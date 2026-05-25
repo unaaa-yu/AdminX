@@ -1,58 +1,71 @@
 import { useDispatch } from 'react-redux'
-import { Avatar, Button, Layout, Dropdown } from 'antd';
-import { MenuFoldOutlined } from '@ant-design/icons'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { Avatar, Breadcrumb, Button, Dropdown, Layout } from 'antd'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import userAvatar from '../assets/images/user.png'
-import { collapsePanel }from '../store/reducer/tab'
+import { collapsePanel } from '../store/reducer/tab'
+import { clearUserInfo } from '../store/reducer/auth'
 
-const { Header } = Layout;
+const { Header } = Layout
+
+const routeLabels = {
+    '/home': '首页',
+    '/mall': '商品管理',
+    '/user': '用户管理',
+    '/other': '其他',
+    '/other/pageone': '页面1',
+    '/other/pagetwo': '页面2',
+}
 
 const MainHeader = ({ collapsed }) => {
-	const logout = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
 
-	}
-	const items = [
-		{
-			key: '1', 
-			label: (
-			<a target=" _blank" rel="noopener noreferrer">
-				个人中心
-			</a >
-			),
-		},
-	    {
-			key: '2',
-			label: (
-			<a onClick={() => logout()} target="_blank" rel="noopener noreferrer">
-				退出
-			</a>
-			),
-		},
-	]
+    const getBreadcrumbs = () => {
+        const parts = location.pathname.split('/').filter(Boolean)
+        const crumbs = [{ title: '首页' }]
+        let path = ''
+        for (const part of parts) {
+            path += '/' + part
+            const label = routeLabels[path]
+            if (label && path !== '/home') {
+                crumbs.push({ title: label })
+            }
+        }
+        return crumbs
+    }
 
-	// 获取dispatch
-	const dispatch = useDispatch()
+    const logout = () => {
+        dispatch(clearUserInfo())
+        navigate('/login')
+    }
+
+    const dropdownItems = [
+        { key: '1', label: <span>个人中心</span> },
+        { key: '2', label: <span onClick={logout}>退出登录</span> },
+    ]
 
     return (
         <Header style={{
-			display: 'flex',
-			justifyContent: 'space-between',
-			alignItems: 'center'}}
-		>
-			<Button
-			  type="text"
-			  icon={<MenuFoldOutlined />}
-			  style={{
-				fontSize: '16px',
-				width: 64,
-				height: 32,
-				backgroundColor: '#fff'
-			  }}
-			  onClick={() => dispatch(collapsePanel())}
-			/>
-			<Dropdown menu={{items}}>
-				<Avatar src={userAvatar} />
-			</Dropdown>
-		</Header>
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '0 16px'
+        }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                <Button
+                    type="text"
+                    icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                    style={{ fontSize: '16px', width: 40, height: 40, backgroundColor: '#fff' }}
+                    onClick={() => dispatch(collapsePanel())}
+                />
+                <Breadcrumb items={getBreadcrumbs()} />
+            </div>
+            <Dropdown menu={{ items: dropdownItems }}>
+                <Avatar src={userAvatar} style={{ cursor: 'pointer' }} />
+            </Dropdown>
+        </Header>
     )
 }
 

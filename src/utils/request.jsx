@@ -7,33 +7,23 @@ class HttpRequest {
         this.baseUrl = baseUrl
     }
 
-    getConfig() {
-        const config = {
-            baseUrl: this.baseUrl,
-            header: {}
-        }
-        return config
-    }
-
     interception(instance) {
-        instance.interceptors.request.use((config) => { 
+        instance.interceptors.request.use((config) => {
+            const token = localStorage.getItem('token')
+            if (token) {
+                config.headers['Authorization'] = `Bearer ${token}`
+            }
             return config
-        }, 
-        (error) => {
-            return Promise.reject(error)
-        })
+        }, (error) => Promise.reject(error))
 
-        instance.interceptors.response.use((response) => { 
-            return response
-        }, 
-        (error) => {
-            return Promise.reject(error)
-        })
+        instance.interceptors.response.use(
+            (response) => response,
+            (error) => Promise.reject(error)
+        )
     }
 
     request(options) {
-        options = { ...this.getConfig(), ...options }
-        const instance = axios.create()
+        const instance = axios.create({ baseURL: this.baseUrl })
         this.interception(instance)
         return instance(options)
     }
