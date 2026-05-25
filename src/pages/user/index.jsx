@@ -128,6 +128,7 @@ const User = () => {
                 loading={loading}
                 columns={columns}
                 dataSource={tableData}
+                scroll={{ y: 'calc(100vh - 360px)' }}
                 pagination={{
                     total,
                     current: page,

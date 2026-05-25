@@ -92,7 +92,7 @@ const Home = () => {
         <div className={styles.home}>
             <Row gutter={20}>
                 <Col span={8}>
-                    <Card hoverable>
+                    <Card hoverable size="small">
                         <div className={styles.user}>
                             <img src={userAvatar} alt="avatar" />
                             <div className={styles['user-info']}>
@@ -104,31 +104,32 @@ const Home = () => {
                             <p>上次登录时间：<span>2026-04-07</span></p>
                         </div>
                     </Card>
-                    <Card style={{ marginTop: 20 }}>
+                    <Card size="small" style={{ marginTop: 12 }}>
                         <Table
                             rowKey="name"
                             columns={purchaseColumns}
                             dataSource={tableData}
                             pagination={false}
                             size="small"
+                            scroll={{ y: 100 }}
                         />
                     </Card>
                 </Col>
                 <Col span={16}>
                     <Card title="本周用户统计">
-                        <div ref={barRef} style={{ height: 300 }} />
+                        <div ref={barRef} style={{ height: 260 }} />
                     </Card>
                 </Col>
             </Row>
             <Row gutter={20} style={{ marginTop: 20 }}>
                 <Col span={16}>
                     <Card title="近7日品牌销售趋势">
-                        <div ref={lineRef} style={{ height: 300 }} />
+                        <div ref={lineRef} style={{ height: 200 }} />
                     </Card>
                 </Col>
                 <Col span={8}>
                     <Card title="品牌销量占比">
-                        <div ref={pieRef} style={{ height: 300 }} />
+                        <div ref={pieRef} style={{ height: 200 }} />
                     </Card>
                 </Col>
             </Row>
