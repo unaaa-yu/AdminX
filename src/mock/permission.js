@@ -53,7 +53,7 @@ export default {
           message: 'Success'
         }
       }
-    } else if (username === 'xiaoxiao' && password === 'xiaoxiao') {
+    } else if (username === 'jessica' && password === 'jessica') {
       return {
         code: 20000,
         data: {

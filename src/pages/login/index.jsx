@@ -40,7 +40,7 @@ const Login = () => {
                 style={{ width: 400, borderRadius: 8 }}
             >
                 <p style={{ color: '#999', marginBottom: 24, textAlign: 'center' }}>
-                    Test accounts: admin / admin &nbsp;or&nbsp; xiaoxiao / xiaoxiao
+                    Test accounts: admin / admin &nbsp;or&nbsp; jessica / jessica
                 </p>
                 <Form onFinish={onFinish} autoComplete="off" size="large">
                     <Form.Item name="username" rules={[{ required: true, message: 'Please enter username' }]}>
