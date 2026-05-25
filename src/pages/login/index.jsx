@@ -23,7 +23,7 @@ const Login = () => {
                 message.error(data.data.message)
             }
         } catch {
-            message.error('登录失败，请重试')
+            message.error('Login failed, please try again')
         }
     }
 
@@ -36,22 +36,22 @@ const Login = () => {
             background: 'linear-gradient(135deg, #001529 0%, #003a70 100%)'
         }}>
             <Card
-                title={<span style={{ fontSize: 20 }}>AdminX 管理系统</span>}
+                title={<span style={{ fontSize: 20 }}>AdminX</span>}
                 style={{ width: 400, borderRadius: 8 }}
             >
                 <p style={{ color: '#999', marginBottom: 24, textAlign: 'center' }}>
-                    测试账号：admin / admin　或　xiaoxiao / xiaoxiao
+                    Test accounts: admin / admin &nbsp;or&nbsp; xiaoxiao / xiaoxiao
                 </p>
                 <Form onFinish={onFinish} autoComplete="off" size="large">
-                    <Form.Item name="username" rules={[{ required: true, message: '请输入用户名' }]}>
-                        <Input prefix={<UserOutlined />} placeholder="用户名" />
+                    <Form.Item name="username" rules={[{ required: true, message: 'Please enter username' }]}>
+                        <Input prefix={<UserOutlined />} placeholder="Username" />
                     </Form.Item>
-                    <Form.Item name="password" rules={[{ required: true, message: '请输入密码' }]}>
-                        <Input.Password prefix={<LockOutlined />} placeholder="密码" />
+                    <Form.Item name="password" rules={[{ required: true, message: 'Please enter password' }]}>
+                        <Input.Password prefix={<LockOutlined />} placeholder="Password" />
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" block>
-                            登录
+                            Sign In
                         </Button>
                     </Form.Item>
                 </Form>

@@ -53,7 +53,7 @@ const User = () => {
 
     const handleDelete = async (id) => {
         await deleteUser({ id })
-        message.success('删除成功')
+        message.success('Deleted successfully')
         fetchData()
     }
 
@@ -62,43 +62,43 @@ const User = () => {
         const payload = { ...values, birth: values.birth.format('YYYY-MM-DD') }
         if (editRecord) {
             await updateUser({ ...payload, id: editRecord.id })
-            message.success('编辑成功')
+            message.success('Updated successfully')
         } else {
             await createUser(payload)
-            message.success('添加成功')
+            message.success('Added successfully')
         }
         setModalOpen(false)
         fetchData()
     }
 
     const columns = [
-        { title: '姓名', dataIndex: 'name', width: 100 },
-        { title: '地址', dataIndex: 'addr', ellipsis: true },
-        { title: '年龄', dataIndex: 'age', width: 70 },
-        { title: '出生日期', dataIndex: 'birth', width: 120 },
+        { title: 'Name',     dataIndex: 'name', width: 140 },
+        { title: 'Address',  dataIndex: 'addr', ellipsis: true },
+        { title: 'Age',      dataIndex: 'age',  width: 70 },
+        { title: 'Birthday', dataIndex: 'birth', width: 120 },
         {
-            title: '性别',
+            title: 'Gender',
             dataIndex: 'sex',
-            width: 80,
+            width: 90,
             render: (val) => (
-                <Tag color={val ? 'blue' : 'pink'}>{val ? '男' : '女'}</Tag>
+                <Tag color={val ? 'blue' : 'pink'}>{val ? 'Male' : 'Female'}</Tag>
             )
         },
         {
-            title: '操作',
+            title: 'Actions',
             width: 140,
             render: (_, record) => (
                 <Space>
                     <Button type="primary" size="small" onClick={() => openEdit(record)}>
-                        编辑
+                        Edit
                     </Button>
                     <Popconfirm
-                        title="确认删除该用户？"
+                        title="Delete this user?"
                         onConfirm={() => handleDelete(record.id)}
-                        okText="确认"
-                        cancelText="取消"
+                        okText="Yes"
+                        cancelText="No"
                     >
-                        <Button type="primary" danger size="small">删除</Button>
+                        <Button type="primary" danger size="small">Delete</Button>
                     </Popconfirm>
                 </Space>
             )
@@ -109,17 +109,17 @@ const User = () => {
         <div>
             <Space style={{ marginBottom: 16 }}>
                 <Input
-                    placeholder="搜索姓名/地址"
+                    placeholder="Search by name / address"
                     value={searchName}
                     onChange={e => setSearchName(e.target.value)}
                     onPressEnter={handleSearch}
                     prefix={<SearchOutlined />}
-                    style={{ width: 220 }}
+                    style={{ width: 240 }}
                     allowClear
                 />
-                <Button type="primary" onClick={handleSearch}>搜索</Button>
+                <Button type="primary" onClick={handleSearch}>Search</Button>
                 <Button type="primary" icon={<PlusOutlined />} onClick={openAdd}>
-                    新增用户
+                    Add User
                 </Button>
             </Space>
 
@@ -133,40 +133,38 @@ const User = () => {
                     total,
                     current: page,
                     pageSize: 20,
-                    showTotal: (t) => `共 ${t} 条`,
+                    showTotal: (t) => `Total: ${t}`,
                     onChange: (p) => setPage(p)
                 }}
             />
 
             <Modal
-                title={editRecord ? '编辑用户' : '新增用户'}
+                title={editRecord ? 'Edit User' : 'Add User'}
                 open={modalOpen}
                 onOk={handleSubmit}
                 onCancel={() => setModalOpen(false)}
-                okText="确认"
-                cancelText="取消"
+                okText="Confirm"
+                cancelText="Cancel"
                 destroyOnClose
             >
-                <Form form={form} labelCol={{ span: 5 }} style={{ marginTop: 16 }}>
-                    <Form.Item name="name" label="姓名" rules={[{ required: true }]}>
+                <Form form={form} labelCol={{ span: 6 }} style={{ marginTop: 16 }}>
+                    <Form.Item name="name"  label="Name"     rules={[{ required: true }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="addr" label="地址" rules={[{ required: true }]}>
+                    <Form.Item name="addr"  label="Address"  rules={[{ required: true }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="age" label="年龄" rules={[{ required: true }]}>
+                    <Form.Item name="age"   label="Age"      rules={[{ required: true }]}>
                         <Input type="number" min={1} max={120} />
                     </Form.Item>
-                    <Form.Item name="birth" label="出生日期" rules={[{ required: true }]}>
+                    <Form.Item name="birth" label="Birthday" rules={[{ required: true }]}>
                         <DatePicker style={{ width: '100%' }} />
                     </Form.Item>
-                    <Form.Item name="sex" label="性别" rules={[{ required: true }]}>
-                        <Select
-                            options={[
-                                { label: '男', value: '1' },
-                                { label: '女', value: '0' }
-                            ]}
-                        />
+                    <Form.Item name="sex"   label="Gender"   rules={[{ required: true }]}>
+                        <Select options={[
+                            { label: 'Male',   value: '1' },
+                            { label: 'Female', value: '0' }
+                        ]} />
                     </Form.Item>
                 </Form>
             </Modal>

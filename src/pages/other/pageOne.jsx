@@ -1,7 +1,7 @@
 const PageOne = () => {
     return (
         <div>
-            PageOne页面
+            Page One
         </div>
     )
 }

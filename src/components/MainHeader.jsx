@@ -9,12 +9,12 @@ import { clearUserInfo } from '../store/reducer/auth'
 const { Header } = Layout
 
 const routeLabels = {
-    '/home': '首页',
-    '/mall': '商品管理',
-    '/user': '用户管理',
-    '/other': '其他',
-    '/other/pageone': '页面1',
-    '/other/pagetwo': '页面2',
+    '/home':          'Home',
+    '/mall':          'Products',
+    '/user':          'Users',
+    '/other':         'Other',
+    '/other/pageone': 'Page 1',
+    '/other/pagetwo': 'Page 2',
 }
 
 const MainHeader = ({ collapsed }) => {
@@ -24,7 +24,7 @@ const MainHeader = ({ collapsed }) => {
 
     const getBreadcrumbs = () => {
         const parts = location.pathname.split('/').filter(Boolean)
-        const crumbs = [{ title: '首页' }]
+        const crumbs = [{ title: 'Home' }]
         let path = ''
         for (const part of parts) {
             path += '/' + part
@@ -42,8 +42,8 @@ const MainHeader = ({ collapsed }) => {
     }
 
     const dropdownItems = [
-        { key: '1', label: <span>个人中心</span> },
-        { key: '2', label: <span onClick={logout}>退出登录</span> },
+        { key: '1', label: <span>Profile</span> },
+        { key: '2', label: <span onClick={logout}>Sign Out</span> },
     ]
 
     return (

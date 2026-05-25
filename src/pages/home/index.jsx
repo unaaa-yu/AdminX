@@ -7,21 +7,21 @@ import styles from './home.module.css'
 import { getData } from '../../api/user'
 
 const purchaseColumns = [
-    { title: '课程', dataIndex: 'name' },
-    { title: '今日购买', dataIndex: 'todayBuy' },
-    { title: '本月购买', dataIndex: 'monthBuy' },
-    { title: '总购买', dataIndex: 'totalBuy' },
+    { title: 'Course',          dataIndex: 'name' },
+    { title: "Today's Buys",   dataIndex: 'todayBuy' },
+    { title: 'Monthly Buys',   dataIndex: 'monthBuy' },
+    { title: 'Total Buys',     dataIndex: 'totalBuy' },
 ]
 
-const brands = ['苹果', 'vivo', 'oppo', '魅族', '三星', '小米']
+const brands = ['Apple', 'Samsung', 'Google', 'Motorola', 'OnePlus', 'Sony']
 
 const stats = [
-    { icon: <CheckCircleOutlined />, color: '#2ec7c9', value: '1,234', label: '今日支付订单' },
-    { icon: <ClockCircleOutlined />,  color: '#ffb980', value: '3,421', label: '今日收藏订单' },
-    { icon: <CloseCircleOutlined />,  color: '#5ab1ef', value: '1,234', label: '今日未支付订单' },
-    { icon: <CheckCircleOutlined />, color: '#2ec7c9', value: '1,234', label: '本月支付订单' },
-    { icon: <ClockCircleOutlined />,  color: '#ffb980', value: '3,421', label: '本月收藏订单' },
-    { icon: <CloseCircleOutlined />,  color: '#5ab1ef', value: '1,234', label: '本月未支付订单' },
+    { icon: <CheckCircleOutlined />, color: '#2ec7c9', value: '1,234', label: "Today's Paid Orders" },
+    { icon: <ClockCircleOutlined />, color: '#ffb980', value: '3,421', label: "Today's Saved Orders" },
+    { icon: <CloseCircleOutlined />, color: '#5ab1ef', value: '1,234', label: "Today's Unpaid Orders" },
+    { icon: <CheckCircleOutlined />, color: '#2ec7c9', value: '1,234', label: 'Monthly Paid Orders' },
+    { icon: <ClockCircleOutlined />, color: '#ffb980', value: '3,421', label: 'Monthly Saved Orders' },
+    { icon: <CloseCircleOutlined />, color: '#5ab1ef', value: '1,234', label: 'Monthly Unpaid Orders' },
 ]
 
 const StatCard = ({ icon, color, value, label }) => (
@@ -83,12 +83,12 @@ const Home = () => {
         bar.setOption({
             grid: { top: 28, right: 8, bottom: 28, left: 42 },
             tooltip: { trigger: 'axis' },
-            legend: { data: ['新增用户', '活跃用户'], top: 0, textStyle: { fontSize: 10 } },
+            legend: { data: ['New Users', 'Active Users'], top: 0, textStyle: { fontSize: 10 } },
             xAxis: { data: chartData.userData.map(d => d.date), axisLabel: { fontSize: 10 } },
             yAxis: { axisLabel: { fontSize: 10 } },
             series: [
-                { name: '新增用户', type: 'bar', data: chartData.userData.map(d => d.new) },
-                { name: '活跃用户', type: 'bar', data: chartData.userData.map(d => d.active) },
+                { name: 'New Users',    type: 'bar', data: chartData.userData.map(d => d.new) },
+                { name: 'Active Users', type: 'bar', data: chartData.userData.map(d => d.active) },
             ]
         })
 
@@ -113,19 +113,18 @@ const Home = () => {
     return (
         <div className={styles.home}>
             <Row gutter={20}>
-                {/* Left column: user card + purchase table */}
                 <Col span={8}>
                     <Card size="small">
                         <div className={styles.user}>
                             <img src={userAvatar} alt="avatar" />
                             <div className={styles['user-info']}>
                                 <p className={styles.name}>Admin</p>
-                                <p className={styles.access}>超级管理员</p>
+                                <p className={styles.access}>Super Admin</p>
                             </div>
                         </div>
                         <div className={styles['login-info']}>
-                            <p>上次登录时间：<span>2026-04-07</span></p>
-                            <p>上次登录地点：<span>武汉</span></p>
+                            <p>Last Login:<span>2026-04-07</span></p>
+                            <p>Last Location:<span>Toronto, ON</span></p>
                         </div>
                     </Card>
                     <Card size="small" style={{ marginTop: 12 }}>
@@ -139,7 +138,6 @@ const Home = () => {
                     </Card>
                 </Col>
 
-                {/* Right column: stat cards → line chart → bar + pie */}
                 <Col span={16}>
                     <Row gutter={[10, 10]} style={{ marginBottom: 10 }}>
                         {stats.map((s, i) => (

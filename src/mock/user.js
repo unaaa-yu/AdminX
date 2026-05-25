@@ -1,11 +1,8 @@
 import Mock from 'mockjs'
 
-// get请求从config.url获取参数，post从config.body中获取参数
 function param2Obj (url) {
   const search = url.split('?')[1]
-  if (!search) {
-    return {}
-  }
+  if (!search) return {}
   return JSON.parse(
     '{"' +
     decodeURIComponent(search)
@@ -16,6 +13,33 @@ function param2Obj (url) {
   )
 }
 
+// 70% Canadian · 20% US · 10% worldwide
+const addresses = [
+  // Canada (14)
+  'Toronto, ON, Canada',
+  'Vancouver, BC, Canada',
+  'Montreal, QC, Canada',
+  'Calgary, AB, Canada',
+  'Ottawa, ON, Canada',
+  'Edmonton, AB, Canada',
+  'Winnipeg, MB, Canada',
+  'Quebec City, QC, Canada',
+  'Hamilton, ON, Canada',
+  'Kitchener, ON, Canada',
+  'London, ON, Canada',
+  'Halifax, NS, Canada',
+  'Saskatoon, SK, Canada',
+  'Victoria, BC, Canada',
+  // United States (4)
+  'New York, NY, USA',
+  'Los Angeles, CA, USA',
+  'Chicago, IL, USA',
+  'Seattle, WA, USA',
+  // Worldwide (2)
+  'London, England, UK',
+  'Sydney, NSW, Australia',
+]
+
 let List = []
 const count = 200
 
@@ -23,8 +47,8 @@ for (let i = 0; i < count; i++) {
   List.push(
     Mock.mock({
       id: Mock.Random.guid(),
-      name: Mock.Random.cname(),
-      addr: Mock.mock('@county(true)'),
+      name: Mock.Random.name(),
+      'addr|1': addresses,
       'age|18-60': 1,
       birth: Mock.Random.date(),
       sex: Mock.Random.integer(0, 1)
@@ -33,12 +57,6 @@ for (let i = 0; i < count; i++) {
 }
 
 export default {
-  /**
-   * 获取列表
-   * 要带参数 name, page, limt; name可以不填, page,limit有默认值。
-   * @param name, page, limit
-   * @return {{code: number, count: number, data: *[]}}
-   */
   getUserList: config => {
     const { name, page = 1, limit = 20 } = param2Obj(config.url)
     const mockList = List.filter(user => {
@@ -46,93 +64,35 @@ export default {
       return true
     })
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
-    return {
-      code: 20000,
-      count: mockList.length,
-      list: pageList
-    }
+    return { code: 20000, count: mockList.length, list: pageList }
   },
-  /**
-   * 增加用户
-   * @param name, addr, age, birth, sex
-   * @return {{code: number, data: {message: string}}}
-   */
   createUser: config => {
     const { name, addr, age, birth, sex } = JSON.parse(config.body)
-    List.unshift({
-      id: Mock.Random.guid(),
-      name: name,
-      addr: addr,
-      age: age,
-      birth: birth,
-      sex: sex
-    })
-    return {
-      code: 20000,
-      data: {
-        message: '添加成功'
-      }
-    }
+    List.unshift({ id: Mock.Random.guid(), name, addr, age, birth, sex })
+    return { code: 20000, data: { message: 'Added successfully' } }
   },
-  /**
-   * 删除用户
-   * @param id
-   * @return {*}
-   */
   deleteUser: config => {
     const { id } = JSON.parse(config.body)
-    if (!id) {
-      return {
-        code: -999,
-        message: '参数不正确'
-      }
-    } else {
-      List = List.filter(u => u.id !== id)
-      return {
-        code: 20000,
-        message: '删除成功'
-      }
-    }
+    if (!id) return { code: -999, message: 'Invalid parameters' }
+    List = List.filter(u => u.id !== id)
+    return { code: 20000, message: 'Deleted successfully' }
   },
-  /**
-   * 批量删除
-   * @param config
-   * @return {{code: number, data: {message: string}}}
-   */
   batchremove: config => {
     let { ids } = param2Obj(config.url)
     ids = ids.split(',')
     List = List.filter(u => !ids.includes(u.id))
-    return {
-      code: 20000,
-      data: {
-        message: '批量删除成功'
-      }
-    }
+    return { code: 20000, data: { message: 'Batch deleted successfully' } }
   },
-  /**
-   * 修改用户
-   * @param id, name, addr, age, birth, sex
-   * @return {{code: number, data: {message: string}}}
-   */
   updateUser: config => {
     const { id, name, addr, age, birth, sex } = JSON.parse(config.body)
     const sex_num = parseInt(sex)
     List.some(u => {
       if (u.id === id) {
-        u.name = name
-        u.addr = addr
-        u.age = age
-        u.birth = birth
-        u.sex = sex_num
+        u.name = name; u.addr = addr; u.age = age
+        u.birth = birth; u.sex = sex_num
         return true
       }
     })
-    return {
-      code: 20000,
-      data: {
-        message: '编辑成功'
-      }
-    }
+    return { code: 20000, data: { message: 'Updated successfully' } }
   }
 }

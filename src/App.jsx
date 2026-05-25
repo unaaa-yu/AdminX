@@ -12,7 +12,6 @@ const App = () => {
 	  token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
 
-	// 获取点开/收起的状态
 	const collapsed = useSelector(state => state.tab.isCollapse)
 
 	return (
