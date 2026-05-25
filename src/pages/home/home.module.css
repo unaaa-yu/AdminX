@@ -1,30 +1,35 @@
-.home img{
+.home img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    margin-right: 20px;
+    margin-right: 16px;
 }
 
 .home .name {
     font-size: 20px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
+}
+
+.home .access {
+    font-size: 13px;
+    color: #999;
 }
 
 .home .user {
     display: flex;
     align-items: center;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ccc;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #eee;
 }
 
 .home .login-info p {
-    line-height: 28px;
-    font-size: 14px;
-    color: #999999;
+    line-height: 24px;
+    font-size: 13px;
+    color: #999;
 }
 
 .home .login-info p span {
-    color: #666666;
-    margin-left: 60px;
+    color: #555;
+    margin-left: 8px;
 }
